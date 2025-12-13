@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "question": "What is JavaScript?",
+    "options": [
+      "Language",
+      "Framework",
+      "Database"
+    ],
+    "correctAnswer": "Language",
+    "difficulty": "easy"
+  }
+]
