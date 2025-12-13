@@ -1,6 +1,6 @@
 import app from './app.js';
 
-// Start the server
+/* global process */
 const PORT = process.env.PORT || 3000;
 
 // Listen on the specified port
