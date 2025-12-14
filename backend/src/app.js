@@ -1,6 +1,6 @@
 import express from 'express';
 import questionsRoutes from './routes/questions.routes.js'; 
-import { adminOnly } from './admin/admin.js';
+
 
 // Create an Express application
 const app = express();
