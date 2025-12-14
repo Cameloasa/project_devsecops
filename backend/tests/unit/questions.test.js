@@ -14,6 +14,7 @@ const dataFilePath = path.join(__dirname, '../../data/questions.json');
 const readQuestions = () => JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
 const writeQuestions = (questions) => fs.writeFileSync(dataFilePath, JSON.stringify(questions, null, 2));
 
+// Test suite for questions.json operations
 describe('Questions JSON', () => {
   it('should read questions', () => {
     const data = readQuestions();

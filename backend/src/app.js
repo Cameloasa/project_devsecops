@@ -1,6 +1,7 @@
 import express from 'express';
 import questionsRoutes from './routes/questions.routes.js'; 
 
+
 // Create an Express application
 const app = express();
 
@@ -12,7 +13,7 @@ app.use('/api/questions', questionsRoutes);
 
 // Sample route
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.send('Server is running in dev mode and is up!');
 });
 
 // Handle 404 errors
