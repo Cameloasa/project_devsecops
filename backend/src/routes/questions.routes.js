@@ -2,6 +2,7 @@ import { Router } from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { adminOnly } from '../admin/admin';
 
 const router = Router();
 
@@ -42,7 +43,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST create a new question
-router.post('/', (req, res) => {
+router.post('/', adminOnly,(req, res) => {
   const questions = readQuestions();
   const newQuestion = {
     id: questions.length ? questions[questions.length - 1].id + 1 : 1,
@@ -54,7 +55,7 @@ router.post('/', (req, res) => {
 });
 
 // PUT update a question by ID
-router.put('/:id', (req, res) => {
+router.put('/:id', adminOnly, (req, res) => {
   const questions = readQuestions();
   const index = questions.findIndex(
     (q) => q.id === parseInt(req.params.id)
@@ -68,7 +69,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE a question by ID
-router.delete('/:id', (req, res) => {
+router.delete('/:id', adminOnly, (req, res) => {
   const questions = readQuestions();
   const index = questions.findIndex(
     (q) => q.id === parseInt(req.params.id)

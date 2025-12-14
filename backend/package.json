@@ -5,13 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "vitest",
-    "mock-api": "json-server --watch data/questions.json --port 3001"
+    "lint": "eslint ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "quiz",
+    "node",
+    "express",
+    "api",
+    "backend"
+  ],
+  "author": "Camel",
+  "license": "MIT",
+  "description": "Backend for Quiz App – REST API using Node.js and Express",
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.2.1"
@@ -20,7 +27,7 @@
     "@eslint/js": "^9.39.1",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
-    "json-server": "^1.0.0-beta.3",
+    "nodemon": "^3.1.11",
     "vitest": "^4.0.15"
   }
 }
