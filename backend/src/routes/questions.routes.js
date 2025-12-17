@@ -2,7 +2,7 @@ import { Router } from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { adminOnly } from '../admin/admin';
+import { adminOnly } from '../admin/admin.js';
 
 const router = Router();
 
@@ -52,6 +52,21 @@ router.post('/', adminOnly,(req, res) => {
   questions.push(newQuestion);
   writeQuestions(questions);
   res.status(201).json(newQuestion);
+});
+
+// Patch update a question by ID
+router.patch('/:id', adminOnly, (req, res) => {
+  const questions = readQuestions();
+  const index = questions.findIndex(
+    (q) => q.id === parseInt(req.params.id)
+  );
+  if (index === -1) {
+    return res.status(403).json({ message: 'Question not found' });
+  }
+  const updatedQuestion = { ...questions[index], ...req.body };
+  questions[index] = updatedQuestion;
+  writeQuestions(questions);
+  res.json(updatedQuestion);
 });
 
 // PUT update a question by ID
