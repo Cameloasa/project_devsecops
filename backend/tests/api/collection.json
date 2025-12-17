@@ -1,0 +1,353 @@
+{
+	"info": {
+		"_postman_id": "09946650-4b87-42c3-9a70-d51ce28665aa",
+		"name": "collection",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36365267"
+	},
+	"item": [
+		{
+			"name": "Get all 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response is 200\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check if the response time is less than 200ms\r",
+							"pm.test(\"Response time is less than 200ms\", () => { \r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const questions = pm.response.json();\r",
+							"\r",
+							"// Check if the response is an array of questions\r",
+							"pm.test(\"Response is an array\", () => {\r",
+							"    pm.expect(questions).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"// Check if each question has the required fields\r",
+							"pm.test(\"Each question has required fields\", () => {\r",
+							"    questions.forEach(question => {\r",
+							"        pm.expect(question).to.have.property('id');\r",
+							"        pm.expect(question).to.have.property('question');\r",
+							"        pm.expect(question).to.have.property('options');\r",
+							"        pm.expect(question).to.have.property('correctAnswer');\r",
+							"        pm.expect(question).to.have.property('difficulty');\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-role",
+						"value": "user",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/questions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by id 200",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"questionId\", 1);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response\r",
+							"const question = pm.response.json();\r",
+							"\r",
+							"// 1. Status code is 200\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// 2. Response time < 200ms\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"// 3. Response is an object\r",
+							"pm.test(\"Response is an object\", () => {\r",
+							"    pm.expect(question).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"// 4. Question has required fields\r",
+							"pm.test(\"Question has required fields\", () => {\r",
+							"    pm.expect(question).to.have.property('id');\r",
+							"    pm.expect(question).to.have.property('question');\r",
+							"    pm.expect(question).to.have.property('options');\r",
+							"    pm.expect(question).to.have.property('correctAnswer');\r",
+							"    pm.expect(question).to.have.property('difficulty');\r",
+							"});\r",
+							"\r",
+							"// 5. ID matches requested ID\r",
+							"pm.test(\"Returned ID matches requested ID\", () => {\r",
+							"    pm.expect(question.id).to.eql(\r",
+							"        parseInt(pm.collectionVariables.get(\"questionId\"))\r",
+							"    );\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-role",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/questions/{{questionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions",
+						"{{questionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post admin 201 created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const question = pm.response.json();",
+							"",
+							"// 1. Status code 201",
+							"pm.test(\"Status code is 201\", () => {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"// 2. Response is an object",
+							"pm.test(\"Response is an object\", () => {",
+							"    pm.expect(question).to.be.an('object');",
+							"});",
+							"",
+							"// 3. Question has required fields",
+							"pm.test(\"Question should have required fields\", () => {",
+							"    pm.expect(question).to.have.property('id');",
+							"    pm.expect(question).to.have.property('question');",
+							"    pm.expect(question).to.have.property('options');",
+							"    pm.expect(question).to.have.property('correctAnswer');",
+							"    pm.expect(question).to.have.property('difficulty');",
+							"});",
+							"",
+							"// 4. Difficulty is medium",
+							"pm.test(\"Difficulty is medium\", () => {",
+							"    pm.expect(question.difficulty).to.eql(\"medium\");",
+							"});",
+							"",
+							"// 5. Save ID for next requests",
+							"pm.collectionVariables.set(\"questionId\", question.id);",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-role",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"question\": \"What is 2+2\",\n    \"options\": [\n      \"2\",\"3\",\"4\"\n    ],\n    \"correctAnswer\": \"4\",\n    \"difficulty\": \"medium\"\n  }\n\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/questions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Post  non-admin 403 forbidden",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 1. Check if the status code is 403",
+							"pm.test(\"Status code is 403\", () => {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Response contains forbidden message\", () => {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\");",
+							"    pm.expect(responseBody.message).to.include(\"Forbidden\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-role",
+						"value": "user",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"question\": \"What is 2+2\",\n    \"options\": [\n      \"2\",\"3\",\"4\"\n    ],\n    \"correctAnswer\": \"4\",\n    \"difficulty\": \"medium\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/questions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		},
+		{
+			"key": "questionId",
+			"value": ""
+		},
+		{
+			"key": "newQuestion",
+			"value": ""
+		},
+		{
+			"key": "newDifficulty",
+			"value": ""
+		},
+		{
+			"key": "newOptions",
+			"value": ""
+		},
+		{
+			"key": "newCorrectAnswer",
+			"value": ""
+		},
+		{
+			"key": "updatedQuestion",
+			"value": ""
+		}
+	]
+}

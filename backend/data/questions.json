@@ -9,5 +9,115 @@
     ],
     "correctAnswer": "Language",
     "difficulty": "easy"
+  },
+  {
+    "id": 2,
+    "question": "What is Node.js?",
+    "options": [
+      "Runtime",
+      "Library",
+      "Framework"
+    ],
+    "correctAnswer": "Runtime",
+    "difficulty": "easy"
+  },
+  {
+    "id": 3,
+    "question": "What is Express.js?",
+    "options": [
+      "Framework",
+      "Database",
+      "Language"
+    ],
+    "correctAnswer": "Framework",
+    "difficulty": "medium"
+  },
+  {
+    "id": 4,
+    "question": "What is MongoDB?",
+    "options": [
+      "Database",
+      "Language",
+      "Framework"
+    ],
+    "correctAnswer": "Database",
+    "difficulty": "medium"
+  },
+  {
+    "id": 5,
+    "question": "What is REST API?",
+    "options": [
+      "Architecture",
+      "Library",
+      "Language"
+    ],
+    "correctAnswer": "Architecture",
+    "difficulty": "hard"
+  },
+  {
+    "id": 6,
+    "question": "What is middleware in Express.js?",
+    "options": [
+      "Function",
+      "Database",
+      "Language"
+    ],
+    "correctAnswer": "Function",
+    "difficulty": "hard"
+  },
+  {
+    "id": 7,
+    "question": "What does CRUD stand for?",
+    "options": [
+      "Create, Read, Update, Delete",
+      "Create, Run, Update, Delete",
+      "Connect, Read, Update, Drop"
+    ],
+    "correctAnswer": "Create, Read, Update, Delete",
+    "difficulty": "easy"
+  },
+  {
+    "id": 8,
+    "question": "What is a NoSQL database?",
+    "options": [
+      "Non-relational database",
+      "Structured database",
+      "Query language"
+    ],
+    "correctAnswer": "Non-relational database",
+    "difficulty": "medium"
+  },
+  {
+    "id": 9,
+    "question": "What is asynchronous programming in JavaScript?",
+    "options": [
+      "Non-blocking code execution",
+      "Synchronous code execution",
+      "Blocking code execution"
+    ],
+    "correctAnswer": "Non-blocking code execution",
+    "difficulty": "hard"
+  },
+  {
+    "id": 10,
+    "question": "What is the purpose of package.json in a Node.js project?",
+    "options": [
+      "Manage project dependencies",
+      "Store database configurations",
+      "Define server settings"
+    ],
+    "correctAnswer": "Manage project dependencies",
+    "difficulty": "easy"
+  },
+  {
+    "id": 11,
+    "question": "What is 2+2",
+    "options": [
+      "2",
+      "3",
+      "4"
+    ],
+    "correctAnswer": "4",
+    "difficulty": "medium"
   }
 ]

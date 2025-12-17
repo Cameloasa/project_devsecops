@@ -32,3 +32,10 @@ jobs:
 
       - name: Run tests
         run: cd backend && npm test
+
+      - name: Run API tests
+        run: |
+          cd backend
+          npm start &
+          sleep 5
+          npm run test:api
