@@ -69,19 +69,6 @@ router.patch('/:id', adminOnly, (req, res) => {
   res.json(updatedQuestion);
 });
 
-// PUT update a question by ID
-router.put('/:id', adminOnly, (req, res) => {
-  const questions = readQuestions();
-  const index = questions.findIndex(
-    (q) => q.id === parseInt(req.params.id)
-  );
-  if (index === -1) {
-    return res.status(404).json({ message: 'Question not found' });
-  }
-  questions[index] = { id: questions[index].id, ...req.body };
-  writeQuestions(questions);
-  res.json(questions[index]);
-});
 
 // DELETE a question by ID
 router.delete('/:id', adminOnly, (req, res) => {
