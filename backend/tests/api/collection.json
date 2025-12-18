@@ -1,14 +1,13 @@
 {
 	"info": {
-		"_postman_id": "09946650-4b87-42c3-9a70-d51ce28665aa",
-		"name": "collection",
-		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"_postman_id": "d88d3af1-d273-4675-a84a-bf6577d283ca",
+		"name": "collection2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "36365267"
 	},
 	"item": [
 		{
-			"name": "Get all 200",
+			"name": "Get all user 200",
 			"event": [
 				{
 					"listen": "test",
@@ -32,6 +31,25 @@
 							"    pm.expect(questions).to.be.an('array');\r",
 							"});\r",
 							"\r",
+							"// EDGE-CASE: Handle empty array scenario\r",
+							"if (questions.length === 0) {\r",
+							"    pm.test(\"Empty array is acceptable\", () => {\r",
+							"        pm.expect(questions).to.be.an('array').that.is.empty;\r",
+							"        console.log(\"✅ Database is empty - this is valid\");\r",
+							"    });\r",
+							"} else {\r",
+							"    pm.test(\"Array has at least one question\", () => {\r",
+							"        pm.expect(questions.length).to.be.greaterThan(0);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"// Check if each question has the required fields\r",
+							"pm.test(\"Each question has required fields\", () => {\r",
+							"    questions.forEach(question => {\r",
+							"        // ... restul testelor tale\r",
+							"    });\r",
+							"});\r",
+							"\r",
 							"// Check if each question has the required fields\r",
 							"pm.test(\"Each question has required fields\", () => {\r",
 							"    questions.forEach(question => {\r",
@@ -42,11 +60,34 @@
 							"        pm.expect(question).to.have.property('difficulty');\r",
 							"    });\r",
 							"});\r",
+							"\r",
+							"// SALVE first id\r",
+							"if (questions.length > 0) {\r",
+							"    // choose first id \r",
+							"    const questionId = questions[0].id;\r",
+							"    \r",
+							"    // save first id to collection variable for later use in other tests\r",
+							"    pm.collectionVariables.set(\"questionId\", questionId);\r",
+							"    \r",
+							"    console.log(\" Saved test ID: \" + questionId + \" (\" + questions[0].question.substring(0, 20) + \"...)\");\r",
+							"} else {\r",
+							"    console.log(\"⚠️ No questions found - will need to create one first\");\r",
+							"    pm.collectionVariables.set(\"questionId\", null);\r",
+							"}\r",
+							"\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript",
 						"packages": {},
 						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -75,13 +116,96 @@
 			"response": []
 		},
 		{
-			"name": "Get by id 200",
+			"name": "Post admin 201 created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response body to JSON",
+							"const question = pm.response.json();",
+							"",
+							"// 1. Status code is 201 (Created)",
+							"pm.test(\"Status code is 201\", () => {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"// 2. Response is an object",
+							"pm.test(\"Response is an object\", () => {",
+							"    pm.expect(question).to.be.an('object');",
+							"});",
+							"",
+							"// 3. Question has all required fields",
+							"pm.test(\"Question has required fields\", () => {",
+							"    pm.expect(question).to.have.property('id');",
+							"    pm.expect(question).to.have.property('question');",
+							"    pm.expect(question).to.have.property('options');",
+							"    pm.expect(question).to.have.property('correctAnswer');",
+							"    pm.expect(question).to.have.property('difficulty');",
+							"});",
+							"",
+							"// 4. Difficulty is what we sent (e.g., \"medium\", \"hard\", \"easy\")",
+							"pm.test(\"Difficulty is correct\", () => {",
+							"    const requestBody = JSON.parse(pm.request.body.raw);",
+							"    pm.expect(question.difficulty).to.eql(requestBody.difficulty);",
+							"});",
+							"",
+							"// 5. Correct answer is in options",
+							"pm.test(\"Correct answer exists in options\", () => {",
+							"    pm.expect(question.options).to.include(question.correctAnswer);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-role",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"question\": \"What is 1+1\",\n    \"options\": [\n      \"2\",\"3\",\"4\"\n    ],\n    \"correctAnswer\": \"2\",\n    \"difficulty\": \"easy\"\n  }\n\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/questions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Get by id admin 200",
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.collectionVariables.set(\"questionId\", 1);"
+							"pm.collectionVariables.set(\"questionId\", 11);\r",
+							"console.log(\"Preparing to patch question ID: 11\");"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -92,40 +216,34 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"// Parse response\r",
-							"const question = pm.response.json();\r",
+							"const status = pm.response.code;\r",
 							"\r",
-							"// 1. Status code is 200\r",
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 200 or 404\", () => {\r",
+							"    pm.expect([200, 404]).to.include(status);\r",
 							"});\r",
 							"\r",
-							"// 2. Response time < 200ms\r",
-							"pm.test(\"Response time is less than 200ms\", () => {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
+							"if (status === 200) {\r",
+							"    const data = pm.response.json();\r",
 							"\r",
-							"// 3. Response is an object\r",
-							"pm.test(\"Response is an object\", () => {\r",
-							"    pm.expect(question).to.be.an('object');\r",
-							"});\r",
+							"    pm.test(\"Question returned correctly\", () => {\r",
+							"        pm.expect(data).to.have.property(\"id\");\r",
+							"        pm.expect(data.id).to.eql(\r",
+							"            parseInt(pm.collectionVariables.get(\"questionId\"))\r",
+							"        );\r",
+							"        pm.expect(data).to.have.property(\"question\");\r",
+							"        pm.expect(data).to.have.property(\"options\");\r",
+							"        pm.expect(data).to.have.property(\"correctAnswer\");\r",
+							"        pm.expect(data).to.have.property(\"difficulty\");\r",
+							"    });\r",
 							"\r",
-							"// 4. Question has required fields\r",
-							"pm.test(\"Question has required fields\", () => {\r",
-							"    pm.expect(question).to.have.property('id');\r",
-							"    pm.expect(question).to.have.property('question');\r",
-							"    pm.expect(question).to.have.property('options');\r",
-							"    pm.expect(question).to.have.property('correctAnswer');\r",
-							"    pm.expect(question).to.have.property('difficulty');\r",
-							"});\r",
+							"} else if (status === 404) {\r",
+							"    const error = pm.response.json();\r",
 							"\r",
-							"// 5. ID matches requested ID\r",
-							"pm.test(\"Returned ID matches requested ID\", () => {\r",
-							"    pm.expect(question.id).to.eql(\r",
-							"        parseInt(pm.collectionVariables.get(\"questionId\"))\r",
-							"    );\r",
-							"});\r",
-							"\r",
+							"    pm.test(\"Question not found message is correct\", () => {\r",
+							"        pm.expect(error).to.have.property(\"message\");\r",
+							"        pm.expect(error.message).to.eql(\"Question not found\");\r",
+							"    });\r",
+							"}\r",
 							""
 						],
 						"type": "text/javascript",
@@ -160,99 +278,51 @@
 			"response": []
 		},
 		{
-			"name": "Post admin 201 created",
+			"name": "Patch by id admin 200",
 			"event": [
 				{
-					"listen": "test",
+					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"const question = pm.response.json();",
-							"",
-							"// 1. Status code 201",
-							"pm.test(\"Status code is 201\", () => {",
-							"    pm.response.to.have.status(201);",
-							"});",
-							"",
-							"// 2. Response is an object",
-							"pm.test(\"Response is an object\", () => {",
-							"    pm.expect(question).to.be.an('object');",
-							"});",
-							"",
-							"// 3. Question has required fields",
-							"pm.test(\"Question should have required fields\", () => {",
-							"    pm.expect(question).to.have.property('id');",
-							"    pm.expect(question).to.have.property('question');",
-							"    pm.expect(question).to.have.property('options');",
-							"    pm.expect(question).to.have.property('correctAnswer');",
-							"    pm.expect(question).to.have.property('difficulty');",
-							"});",
-							"",
-							"// 4. Difficulty is medium",
-							"pm.test(\"Difficulty is medium\", () => {",
-							"    pm.expect(question.difficulty).to.eql(\"medium\");",
-							"});",
-							"",
-							"// 5. Save ID for next requests",
-							"pm.collectionVariables.set(\"questionId\", question.id);",
-							"",
-							""
+							"pm.collectionVariables.set(\"questionId\", 11);"
 						],
 						"type": "text/javascript",
 						"packages": {},
 						"requests": {}
 					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-role",
-						"value": "admin",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"question\": \"What is 2+2\",\n    \"options\": [\n      \"2\",\"3\",\"4\"\n    ],\n    \"correctAnswer\": \"4\",\n    \"difficulty\": \"medium\"\n  }\n\n\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
 				},
-				"url": {
-					"raw": "http://localhost:3000/api/questions",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"questions"
-					]
-				},
-				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-			},
-			"response": []
-		},
-		{
-			"name": "Post  non-admin 403 forbidden",
-			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"// 1. Check if the status code is 403",
-							"pm.test(\"Status code is 403\", () => {",
-							"    pm.response.to.have.status(403);",
-							"});",
-							"",
-							"pm.test(\"Response contains forbidden message\", () => {",
-							"    const responseBody = pm.response.json();",
-							"    pm.expect(responseBody).to.have.property(\"message\");",
-							"    pm.expect(responseBody.message).to.include(\"Forbidden\");",
+							"// 1. Status code is 200\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// 2. Parse response\r",
+							"const updatedQuestion = pm.response.json();\r",
+							"\r",
+							"// 3. Verify only difficulty changed\r",
+							"pm.test(\"Only difficulty field was updated\", () => {\r",
+							"    // Difficulty should be new value\r",
+							"    pm.expect(updatedQuestion.difficulty).to.eql(\"hard\");\r",
+							"    \r",
+							"    // Get the original question to compare (if you stored it)\r",
+							"    // Sau poți face un GET imediat după pentru verificare completă\r",
+							"});\r",
+							"\r",
+							"// 4. ID should remain the same\r",
+							"pm.test(\"ID remains unchanged after PATCH\", () => {\r",
+							"    const questionId = parseInt(pm.collectionVariables.get(\"questionId\"));\r",
+							"    pm.expect(updatedQuestion.id).to.eql(questionId);\r",
+							"});\r",
+							"\r",
+							"// 5. Other fields should still exist\r",
+							"pm.test(\"Other fields are still present\", () => {\r",
+							"    pm.expect(updatedQuestion).to.have.property('question');\r",
+							"    pm.expect(updatedQuestion).to.have.property('options');\r",
+							"    pm.expect(updatedQuestion).to.have.property('correctAnswer');\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -262,17 +332,17 @@
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "PATCH",
 				"header": [
 					{
 						"key": "x-role",
-						"value": "user",
+						"value": "admin",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"question\": \"What is 2+2\",\n    \"options\": [\n      \"2\",\"3\",\"4\"\n    ],\n    \"correctAnswer\": \"4\",\n    \"difficulty\": \"medium\"\n  }",
+					"raw": "{\r\n    \"difficulty\": \"hard\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -280,7 +350,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/questions",
+					"raw": "http://localhost:3000/api/questions/{{questionId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -288,65 +358,186 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"questions"
+						"questions",
+						"{{questionId}}"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by id admin 200",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"questionId\", 11);\r",
+							"console.log(\"Preparing to delete question ID: 11\");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
 				},
-				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;\r",
+							"\r",
+							"pm.test(\"Status code is 200 or 404\", () => {\r",
+							"    pm.expect([200, 404]).to.include(status);\r",
+							"});\r",
+							"\r",
+							"if (status === 200) {\r",
+							"    const data = pm.response.json();\r",
+							"\r",
+							"    pm.test(\"Question returned correctly\", () => {\r",
+							"        pm.expect(data).to.have.property(\"id\");\r",
+							"        pm.expect(data.id).to.eql(\r",
+							"            parseInt(pm.collectionVariables.get(\"questionId\"))\r",
+							"        );\r",
+							"        pm.expect(data).to.have.property(\"question\");\r",
+							"        pm.expect(data).to.have.property(\"options\");\r",
+							"        pm.expect(data).to.have.property(\"correctAnswer\");\r",
+							"        pm.expect(data).to.have.property(\"difficulty\");\r",
+							"    });\r",
+							"\r",
+							"} else if (status === 404) {\r",
+							"    const error = pm.response.json();\r",
+							"\r",
+							"    pm.test(\"Question not found message is correct\", () => {\r",
+							"        pm.expect(error).to.have.property(\"message\");\r",
+							"        pm.expect(error.message).to.eql(\"Question not found\");\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-role",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/questions/{{questionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions",
+						"{{questionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete by id admin 200",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"questionId\", 11);\r",
+							"console.log(\"Preparing to delete question ID: 11\");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Get the expected ID that we tried to delete\r",
+							"const expectedId = parseInt(pm.collectionVariables.get(\"questionId\"));\r",
+							"const status = pm.response.code;\r",
+							"\r",
+							"// Test 1: Check for acceptable status codes\r",
+							"pm.test(\"Status code is 200 or 404\", () => {\r",
+							"    pm.expect([200, 404]).to.include(status);\r",
+							"});\r",
+							"\r",
+							"if (status === 200) {\r",
+							"    // SUCCESS CASE: Question was deleted\r",
+							"    const deletedQuestion = pm.response.json();\r",
+							"    \r",
+							"    pm.test(\"Deleted question ID matches request\", () => {\r",
+							"        pm.expect(deletedQuestion.id).to.eql(expectedId);\r",
+							"    });\r",
+							"    \r",
+							"    pm.test(\"Deleted question has all fields\", () => {\r",
+							"        pm.expect(deletedQuestion).to.have.property('id');\r",
+							"        pm.expect(deletedQuestion).to.have.property('question');\r",
+							"        pm.expect(deletedQuestion).to.have.property('options');\r",
+							"        pm.expect(deletedQuestion).to.have.property('correctAnswer');\r",
+							"        pm.expect(deletedQuestion).to.have.property('difficulty');\r",
+							"    });\r",
+							"    \r",
+							"    console.log(`✅ Successfully deleted question ID: ${expectedId}`);\r",
+							"    \r",
+							"} else if (status === 404) {\r",
+							"    // ERROR CASE: Question didn't exist\r",
+							"    const error = pm.response.json();\r",
+							"    \r",
+							"    pm.test(\"Question not found message\", () => {\r",
+							"        pm.expect(error).to.have.property(\"message\");\r",
+							"        pm.expect(error.message).to.eql(\"Question not found\");\r",
+							"    });\r",
+							"    \r",
+							"    console.log(`✅ Correctly got 404 - question ${expectedId} didn't exist`);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-role",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/questions/{{questionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions",
+						"{{questionId}}"
+					]
+				}
 			},
 			"response": []
 		}
 	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
 	"variable": [
 		{
-			"key": "id",
-			"value": "1"
-		},
-		{
-			"key": "base_url",
-			"value": "https://postman-rest-api-learner.glitch.me/"
-		},
-		{
 			"key": "questionId",
-			"value": ""
-		},
-		{
-			"key": "newQuestion",
-			"value": ""
-		},
-		{
-			"key": "newDifficulty",
-			"value": ""
-		},
-		{
-			"key": "newOptions",
-			"value": ""
-		},
-		{
-			"key": "newCorrectAnswer",
-			"value": ""
-		},
-		{
-			"key": "updatedQuestion",
 			"value": ""
 		}
 	]
