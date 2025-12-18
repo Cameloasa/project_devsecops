@@ -8,7 +8,7 @@
       "Database"
     ],
     "correctAnswer": "Language",
-    "difficulty": "easy"
+    "difficulty": "hard"
   },
   {
     "id": 2,
@@ -108,16 +108,5 @@
     ],
     "correctAnswer": "Manage project dependencies",
     "difficulty": "easy"
-  },
-  {
-    "id": 11,
-    "question": "What is 2+2",
-    "options": [
-      "2",
-      "3",
-      "4"
-    ],
-    "correctAnswer": "4",
-    "difficulty": "medium"
   }
 ]

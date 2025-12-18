@@ -8,7 +8,7 @@
     "dev": "nodemon src/index.js",
     "test": "vitest",
     "lint": "eslint .",
-    "test:api": "newman run tests/api/collection.json"
+    "test:api": "newman run tests/api/collection.json --delay-request 1000"
   },
   "keywords": [
     "quiz",
