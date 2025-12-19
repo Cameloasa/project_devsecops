@@ -1,25 +1,28 @@
-import { describe, test, expect } from 'vitest';
+import { test, expect } from '@playwright/test';
 
-describe('Smoke tests', () => {
-  test('true should be true', () => {
-    expect(true).toBe(true);
-  });
+test('page loads successfully', async ({ page }) => {
+  await page.goto('/');
+  await expect(page).toHaveURL('http://localhost:5173/');
+});
 
-  test('addition works', () => {
-    expect(1 + 1).toBe(2);
-  });
+test('page contains React text', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByText('React')).toBeVisible();
+});
 
-  test('array length', () => {
-    expect([1, 2, 3]).toHaveLength(3);
-  });
+test('page has React logo', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByAltText('React logo')).toBeVisible();
+});
 
-  test('object properties', () => {
-    const obj = { name: 'test', value: 42 };
-    expect(obj).toHaveProperty('name');
-    expect(obj).toHaveProperty('value', 42);
-  });
+test('page has counter button', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: /count is/i })).toBeVisible();
+});
 
-  test('string contains', () => {
-    expect('hello world').toContain('world');
-  });
+test('counter increments', async ({ page }) => {
+  await page.goto('/');
+  const button = page.getByRole('button', { name: /count is/i });
+  await button.click();
+  await expect(button).toContainText('count is 1');
 });

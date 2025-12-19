@@ -32,9 +32,11 @@ cd backend
 2. Start the server
     npm start
 
-    Server runs on [http://localhost:3000]
+3. Backend server runs on
+    - **URL:** [http://localhost:3000]
+    - **API Endpoint (Questions):** [http://localhost:3000/api/questions]
 
-3. For development with auto-reload:
+4. For development with auto-reload:
     npm run dev
 
 ## Frontend Setup
@@ -52,12 +54,14 @@ cd frontend
 2. Start the development server
     npm run dev
 
-    Server runs on [(http://localhost:5173)]
+3. Frontend application
+    - **URL:** [http://localhost:5173]
+    - **Development server with hot reload**
 
-3. For development with auto-reload:
+4. For development with auto-reload:
     npm run dev
 
-4. Build for production
+5. Build for production
     npm run build
 
 ## Tests

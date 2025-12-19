@@ -27,13 +27,13 @@ jobs:
       - name: Install dependencies
         run: cd backend && npm ci
 
-      - name: Run linter
+      - name: Run backend linter
         run: cd backend && npx eslint .
 
-      - name: Run tests
+      - name: Run backend unit tests
         run: cd backend && npm test
 
-      - name: Run API tests
+      - name: Run backend API tests
         run: |
           cd backend
           npm start &
@@ -55,5 +55,12 @@ jobs:
       - name: Install frontend dependencies
         run: cd frontend && npm ci
         
-      - name: Run frontend tests
+      - name: Run frontend unit tests
         run: cd frontend && npm test
+
+      - name: Run frontend E2E tests
+        run: |
+          cd frontend
+          npm run dev &
+          sleep 10
+          npm run test:e2e
