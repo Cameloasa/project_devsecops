@@ -62,5 +62,5 @@ jobs:
         run: |
           cd frontend
           npm run dev &
-          sleep 10
-          npm run test:e2e
+          sleep 20
+           npm run test:e2e
