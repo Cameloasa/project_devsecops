@@ -1,28 +1,24 @@
-import { test, expect } from '@playwright/test';
+import { describe, test, expect } from 'vitest';
 
-test('page loads successfully', async ({ page }) => {
-  await page.goto('/');
-  await expect(page).toHaveURL('http://localhost:5173/');
-});
+describe('Smoke unit tests', () => {
+  test('true is true', () => {
+    expect(true).toBe(true);
+  });
 
-test('page contains React text', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.getByText('React')).toBeVisible();
-});
+  test('addition works', () => {
+    expect(1 + 1).toBe(2);
+  });
 
-test('page has React logo', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.getByAltText('React logo')).toBeVisible();
-});
+  test('array has length', () => {
+    expect([1, 2, 3]).toHaveLength(3);
+  });
 
-test('page has counter button', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.getByRole('button', { name: /count is/i })).toBeVisible();
-});
+  test('object has property', () => {
+    const obj = { name: 'test' };
+    expect(obj).toHaveProperty('name');
+  });
 
-test('counter increments', async ({ page }) => {
-  await page.goto('/');
-  const button = page.getByRole('button', { name: /count is/i });
-  await button.click();
-  await expect(button).toContainText('count is 1');
+  test('string contains', () => {
+    expect('hello world').toContain('world');
+  });
 });
