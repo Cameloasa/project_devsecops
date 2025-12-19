@@ -23,7 +23,6 @@
 							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 							"});\r",
 							"\r",
-							"\r",
 							"const questions = pm.response.json();\r",
 							"\r",
 							"// Check if the response is an array of questions\r",
@@ -35,20 +34,13 @@
 							"if (questions.length === 0) {\r",
 							"    pm.test(\"Empty array is acceptable\", () => {\r",
 							"        pm.expect(questions).to.be.an('array').that.is.empty;\r",
-							"        console.log(\"✅ Database is empty - this is valid\");\r",
+							"        console.log(\"Database is empty - this is valid\");\r",
 							"    });\r",
 							"} else {\r",
 							"    pm.test(\"Array has at least one question\", () => {\r",
 							"        pm.expect(questions.length).to.be.greaterThan(0);\r",
 							"    });\r",
 							"}\r",
-							"\r",
-							"// Check if each question has the required fields\r",
-							"pm.test(\"Each question has required fields\", () => {\r",
-							"    questions.forEach(question => {\r",
-							"        // ... restul testelor tale\r",
-							"    });\r",
-							"});\r",
 							"\r",
 							"// Check if each question has the required fields\r",
 							"pm.test(\"Each question has required fields\", () => {\r",
@@ -71,7 +63,7 @@
 							"    \r",
 							"    console.log(\" Saved test ID: \" + questionId + \" (\" + questions[0].question.substring(0, 20) + \"...)\");\r",
 							"} else {\r",
-							"    console.log(\"⚠️ No questions found - will need to create one first\");\r",
+							"    console.log(\"No questions found - will need to create one first\");\r",
 							"    pm.collectionVariables.set(\"questionId\", null);\r",
 							"}\r",
 							"\r",
@@ -86,8 +78,12 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
 						"packages": {},
-						"type": "text/javascript"
+						"requests": {}
 					}
 				}
 			],
@@ -205,7 +201,7 @@
 					"script": {
 						"exec": [
 							"pm.collectionVariables.set(\"questionId\", 11);\r",
-							"console.log(\"Preparing to patch question ID: 11\");"
+							"console.log(\"Preparing to get question ID: 11 for patch\");"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -218,10 +214,12 @@
 						"exec": [
 							"const status = pm.response.code;\r",
 							"\r",
+							"// Check if the status code is 200 or 404.\r",
 							"pm.test(\"Status code is 200 or 404\", () => {\r",
 							"    pm.expect([200, 404]).to.include(status);\r",
 							"});\r",
 							"\r",
+							"// Check if the response body is correct when status code is 200.\r",
 							"if (status === 200) {\r",
 							"    const data = pm.response.json();\r",
 							"\r",
@@ -236,6 +234,7 @@
 							"        pm.expect(data).to.have.property(\"difficulty\");\r",
 							"    });\r",
 							"\r",
+							"// check if we had de correct status code 404 and message\r",
 							"} else if (status === 404) {\r",
 							"    const error = pm.response.json();\r",
 							"\r",
@@ -284,7 +283,8 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.collectionVariables.set(\"questionId\", 11);"
+							"pm.collectionVariables.set(\"questionId\", 11);\r",
+							"console.log(\"Preparing to patch question ID: 11\");"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -307,9 +307,6 @@
 							"pm.test(\"Only difficulty field was updated\", () => {\r",
 							"    // Difficulty should be new value\r",
 							"    pm.expect(updatedQuestion.difficulty).to.eql(\"hard\");\r",
-							"    \r",
-							"    // Get the original question to compare (if you stored it)\r",
-							"    // Sau poți face un GET imediat după pentru verificare completă\r",
 							"});\r",
 							"\r",
 							"// 4. ID should remain the same\r",
@@ -386,10 +383,12 @@
 						"exec": [
 							"const status = pm.response.code;\r",
 							"\r",
+							"// Check if the status code is 200 or 404.\r",
 							"pm.test(\"Status code is 200 or 404\", () => {\r",
 							"    pm.expect([200, 404]).to.include(status);\r",
 							"});\r",
 							"\r",
+							"// Check if the response body is correct when status code is 200.\r",
 							"if (status === 200) {\r",
 							"    const data = pm.response.json();\r",
 							"\r",
@@ -404,6 +403,7 @@
 							"        pm.expect(data).to.have.property(\"difficulty\");\r",
 							"    });\r",
 							"\r",
+							"// check if had the coorect message and status code when 404\r",
 							"} else if (status === 404) {\r",
 							"    const error = pm.response.json();\r",
 							"\r",
@@ -489,7 +489,7 @@
 							"        pm.expect(deletedQuestion).to.have.property('difficulty');\r",
 							"    });\r",
 							"    \r",
-							"    console.log(`✅ Successfully deleted question ID: ${expectedId}`);\r",
+							"    console.log(`Successfully deleted question ID: ${expectedId}`);\r",
 							"    \r",
 							"} else if (status === 404) {\r",
 							"    // ERROR CASE: Question didn't exist\r",
@@ -500,7 +500,7 @@
 							"        pm.expect(error.message).to.eql(\"Question not found\");\r",
 							"    });\r",
 							"    \r",
-							"    console.log(`✅ Correctly got 404 - question ${expectedId} didn't exist`);\r",
+							"    console.log(`Correctly got 404 - question ${expectedId} didn't exist`);\r",
 							"}"
 						],
 						"type": "text/javascript",
