@@ -61,6 +61,7 @@ jobs:
       - name: Run frontend E2E tests
         run: |
           cd frontend
+          npx playwright install --with-deps chromium
           npm run dev &
           sleep 20
            npm run test:e2e
