@@ -16,7 +16,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './setupTests.js',
-    exclude: ['tests/e2e/**', '**/*.spec.js'] // Exclude e2e tests from unit test runs
+    include: ['tests/unit/**/*.test.js'] // Specify unit test files
   }
 })
 
