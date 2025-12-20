@@ -14,11 +14,11 @@
     "id": 2,
     "question": "What is Node.js?",
     "options": [
-      "Runtime",
       "Library",
-      "Framework"
+      "Framework",
+      "Runtime Environment"
     ],
-    "correctAnswer": "Runtime",
+    "correctAnswer": "Runtime Environment",
     "difficulty": "easy"
   },
   {
@@ -36,9 +36,9 @@
     "id": 4,
     "question": "What is MongoDB?",
     "options": [
-      "Database",
       "Language",
-      "Framework"
+      "Framework",
+      "Database"
     ],
     "correctAnswer": "Database",
     "difficulty": "medium"
@@ -52,15 +52,16 @@
       "Language"
     ],
     "correctAnswer": "Architecture",
-    "difficulty": "hard"
+    "difficulty": "medium"
   },
   {
     "id": 6,
     "question": "What is middleware in Express.js?",
     "options": [
-      "Function",
+      "Framework",
       "Database",
-      "Language"
+      "Language",
+      "Function"
     ],
     "correctAnswer": "Function",
     "difficulty": "hard"
@@ -69,8 +70,8 @@
     "id": 7,
     "question": "What does CRUD stand for?",
     "options": [
-      "Create, Read, Update, Delete",
       "Create, Run, Update, Delete",
+      "Create, Read, Update, Delete",
       "Connect, Read, Update, Drop"
     ],
     "correctAnswer": "Create, Read, Update, Delete",
@@ -80,8 +81,8 @@
     "id": 8,
     "question": "What is a NoSQL database?",
     "options": [
-      "Non-relational database",
       "Structured database",
+      "Non-relational database",
       "Query language"
     ],
     "correctAnswer": "Non-relational database",
@@ -102,9 +103,10 @@
     "id": 10,
     "question": "What is the purpose of package.json in a Node.js project?",
     "options": [
-      "Manage project dependencies",
       "Store database configurations",
-      "Define server settings"
+      "Define server settings",
+      "Manage project dependencies",
+      "Handle routing"
     ],
     "correctAnswer": "Manage project dependencies",
     "difficulty": "easy"
