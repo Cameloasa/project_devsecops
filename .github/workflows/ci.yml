@@ -9,6 +9,9 @@ on:
 jobs:
   fullstack-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
 
     steps:
       - uses: actions/checkout@v3
@@ -47,7 +50,7 @@ jobs:
       - name: Run frontend unit tests
         run: cd frontend && npm test
 
-      # Pornim backend-ul pentru testele E2E
+      # Start backend for E2E tests
       - name: Start backend for E2E tests
         run: |
           cd backend
@@ -55,14 +58,14 @@ jobs:
           echo "Backend started"
           sleep 5  
 
-      # E2E tests cu Playwright
+      # E2E tests with Playwright
       - name: Setup Playwright
-        run: cd frontend && npx playwright install --with-deps chromium
+        run:  cd frontend && npx playwright install --with-deps
 
       - name: Run frontend E2E tests
         run: |
           cd frontend
           npm run dev &
           echo "Frontend dev server started"
-          sleep 10  
-          npm run test:e2e
+          sleep 15 
+          npx playwright test --project=${{ matrix.browser }}
