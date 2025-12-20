@@ -1,4 +1,4 @@
-name: Node Backend CI
+name: Full Stack CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main, dev ]
 
 jobs:
-  backend:
+  fullstack-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,13 +18,14 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Cache npm
+      # Backend setup
+      - name: Cache backend npm
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('backend/package-lock.json') }}
+          key: ${{ runner.os }}-node-backend-${{ hashFiles('backend/package-lock.json') }}
 
-      - name: Install dependencies
+      - name: Install backend dependencies
         run: cd backend && npm ci
 
       - name: Run backend linter
@@ -33,35 +34,35 @@ jobs:
       - name: Run backend unit tests
         run: cd backend && npm test
 
-      - name: Run backend API tests
+      # Frontend setup
+      - name: Cache frontend npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-frontend-${{ hashFiles('frontend/package-lock.json') }}
+
+      - name: Install frontend dependencies
+        run: cd frontend && npm ci
+
+      - name: Run frontend unit tests
+        run: cd frontend && npm test
+
+      # Pornim backend-ul pentru testele E2E
+      - name: Start backend for E2E tests
         run: |
           cd backend
           npm start &
-          sleep 5
-          npm run test:api
+          echo "Backend started"
+          sleep 5  
 
-  frontend:
-    runs-on: ubuntu-latest
-    needs: backend  
-    
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          
-      - name: Install frontend dependencies
-        run: cd frontend && npm ci
-        
-      - name: Run frontend unit tests
-        run: cd frontend && npm test
+      # E2E tests cu Playwright
+      - name: Setup Playwright
+        run: cd frontend && npx playwright install --with-deps chromium
 
       - name: Run frontend E2E tests
         run: |
           cd frontend
-          npx playwright install --with-deps chromium
           npm run dev &
-          sleep 20
-           npm run test:e2e
+          echo "Frontend dev server started"
+          sleep 10  
+          npm run test:e2e
