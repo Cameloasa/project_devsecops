@@ -3,9 +3,9 @@
     "id": 1,
     "question": "What is JavaScript?",
     "options": [
-      "Language",
+      "Database",
       "Framework",
-      "Database"
+      "Language"
     ],
     "correctAnswer": "Language",
     "difficulty": "easy"
@@ -108,5 +108,95 @@
     ],
     "correctAnswer": "Manage project dependencies",
     "difficulty": "easy"
+  },
+  {
+    "id": 12,
+    "question": "What is the name of the red-nosed reindeer in the Christmas story?",
+    "options": [
+      "Comet",
+      "Dasher",
+      "Blitzen",
+      "Rudolph"
+    ],
+    "correctAnswer": "Rudolph",
+    "difficulty": "easy"
+  },
+  {
+    "id": 13,
+    "question": "What is another name for Santa Claus?",
+    "options": ["Saint Nicholas", "Father Winter", "Kris Kringle", "All of the above"],
+    "correctAnswer": "All of the above",
+    "difficulty": "easy"
+  },
+  {
+    "id": 14,
+    "question": "In which country is St. Nicholas Day celebrated on December 6th?",
+    "options": ["United States", "Germany", "France", "Italy"],
+    "correctAnswer": "Germany",
+    "difficulty": "medium"
+  },
+  {
+    "id": 15,
+    "question": "What did St. Nicholas traditionally put in children's shoes?",
+    "options": ["Coal", "Toys", "Fruit and nuts", "Money"],
+    "correctAnswer": "Fruit and nuts",
+    "difficulty": "medium"
+  },
+  {
+    "id": 16,
+    "question": "How many reindeer pull Santa's sleigh?",
+    "options": ["8", "9", "10", "12"],
+    "correctAnswer": "9",
+    "difficulty": "easy"
+  },
+  {
+    "id": 17,
+    "question": "What do people traditionally put on top of a Christmas tree?",
+    "options": ["An angel", "A candle", "A star", "A snowflake"],
+    "correctAnswer": "A star",
+    "difficulty": "easy"
+  },
+  {
+    "id": 18,
+    "question": "Which country started the tradition of Christmas trees?",
+    "options": ["USA", "England", "Germany", "Norway"],
+    "correctAnswer": "Germany",
+    "difficulty": "medium"
+  },
+  {
+    "id": 19,
+    "question": "What is the name of the Grinch's dog?",
+    "options": ["Buddy", "Spot", "Max", "Rover"],
+    "correctAnswer": "Max",
+    "difficulty": "medium"
+  },
+  {
+    "id": 20,
+    "question": "What does 'Feliz Navidad' mean in English?",
+    "options": ["Happy New Year", "Season's Greetings", "Merry Christmas", "Happy Holidays"],
+    "correctAnswer": "Merry Christmas",
+    "difficulty": "easy"
+  },
+  {
+    "id": 21,
+    "question": "Which popular Christmas beverage is also called 'milk punch'?",
+    "options": ["Hot chocolate", "Mulled wine", "Eggnog", "Apple cider"],
+    "correctAnswer": "Eggnog",
+    "difficulty": "medium"
+  },
+  {
+    "id": 22,
+    "question": "What was the original color of Santa's suit before Coca-Cola's advertising?",
+    "options": ["Blue", "Red", "Green", "Brown"],
+    "correctAnswer": "Brown",
+    "difficulty": "hard"
+  },
+  {
+    "id": 23,
+    "question": "What is the highest-grossing Christmas film of all time?",
+    "options": ["The Grinch", "Home Alone", "Elf", "The Polar Express"],
+    "correctAnswer": "Home Alone",
+    "difficulty": "hard"
   }
+
 ]

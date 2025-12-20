@@ -2,33 +2,48 @@
 import { useState } from 'react';
 import AdminPage from './pages/AdminPage';
 import QuizPage from './pages/QuizPage';
+import HomePage from './pages/HomePage';
 import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('quiz'); // 'quiz' or 'admin'
+  // application state
+   const [userRole, setUserRole] = useState(null); // null, 'user', sau 'admin'
   
+   // navigation state
+   const renderPage = () => {
+    switch(userRole) {
+      case 'user':
+        return <QuizPage />;
+      case 'admin':
+        return <AdminPage />;
+      default:
+        return <HomePage setUserRole={setUserRole} />;
+    }
+  };
+  
+  const handleLogout = () => {
+    setUserRole(null); // Back to HomePage
+  };
+
   return (
     <div className="App">
+
+      {userRole && (
       <header className="App-header">
         <h1>📚 Quiz Application</h1>
         <nav className="main-nav">
-          <button 
-            onClick={() => setCurrentPage('quiz')}
-            className={currentPage === 'quiz' ? 'active' : ''}
-          >
-            🧠 Take Quiz
+          <button onClick={handleLogout} className="btn-logout">
+             ↩️ Back to Home
           </button>
-          <button 
-            onClick={() => setCurrentPage('admin')}
-            className={currentPage === 'admin' ? 'active' : ''}
-          >
-            📝 Admin Panel
-          </button>
+            <span className="user-badge">
+              {userRole === 'admin' ? '👑 Admin' : '👤 User'}
+            </span>
         </nav>
       </header>
+      )}
       
       <main>
-        {currentPage === 'quiz' ? <QuizPage /> : <AdminPage />}
+         {renderPage()}
       </main>
       
       <footer>
