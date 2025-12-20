@@ -9,9 +9,6 @@ on:
 jobs:
   fullstack-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        browser: [chromium, firefox, webkit]
 
     steps:
       - uses: actions/checkout@v3
@@ -59,6 +56,14 @@ jobs:
           sleep 5  
 
       # E2E tests with Playwright
+      - name: Cache Playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Setup Playwright
         run:  cd frontend && npx playwright install --with-deps
 
@@ -67,5 +72,5 @@ jobs:
           cd frontend
           npm run dev &
           echo "Frontend dev server started"
-          sleep 15 
-          npx playwright test --project=${{ matrix.browser }}
+          sleep 20
+          npx playwright test --browser=all
