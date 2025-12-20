@@ -909,3 +909,138 @@ main > * {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Home Page Styles */
+.home-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.home-header {
+  margin-bottom: 50px;
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.login-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  .login-options {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.option-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+}
+
+.user-option {
+  border-top: 5px solid #4361ee;
+}
+
+.admin-option {
+  border-top: 5px solid #7209b7;
+}
+
+.btn-user, .btn-admin {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s;
+}
+
+.btn-user {
+  background: #4361ee;
+  color: white;
+}
+
+.btn-user:hover {
+  background: #3a56d4;
+}
+
+.btn-admin {
+  background: #7209b7;
+  color: white;
+}
+
+.btn-admin:hover {
+  background: #5a08a3;
+}
+
+.admin-login {
+  margin-top: 20px;
+}
+
+.admin-login input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-top: 10px;
+}
+
+.password-hint {
+  margin-top: 15px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.password-hint code {
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.home-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  color: #6c757d;
+}
+
+/* App Header Updates */
+.btn-logout {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.user-badge {
+  background: #e9ecef;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-left: 10px;
+  font-weight: bold;
+}
