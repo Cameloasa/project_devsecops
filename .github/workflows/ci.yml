@@ -47,7 +47,7 @@ jobs:
       - name: Run frontend unit tests
         run: cd frontend && npm test
 
-      # Pornim backend-ul pentru testele E2E
+      # Start backend for E2E tests
       - name: Start backend for E2E tests
         run: |
           cd backend
@@ -55,14 +55,22 @@ jobs:
           echo "Backend started"
           sleep 5  
 
-      # E2E tests cu Playwright
+      # E2E tests with Playwright
+      - name: Cache Playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Setup Playwright
-        run: cd frontend && npx playwright install --with-deps chromium
+        run:  cd frontend && npx playwright install --with-deps
 
       - name: Run frontend E2E tests
         run: |
           cd frontend
           npm run dev &
           echo "Frontend dev server started"
-          sleep 10  
-          npm run test:e2e
+          sleep 20
+          npx playwright test --project=chromium --project=firefox --project=webkit
