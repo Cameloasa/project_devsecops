@@ -110,6 +110,18 @@
     "difficulty": "easy"
   },
   {
+    "id": 11,
+    "question": "Which holiday is celebrated on December 25th?",
+    "options": [
+      "Halloween",
+      "Thanksgiving",
+      "Christmas",
+      "Easter"
+    ],
+    "correctAnswer": "Christmas",
+    "difficulty": "easy"
+  },
+  {
     "id": 12,
     "question": "What is the name of the red-nosed reindeer in the Christmas story?",
     "options": [
@@ -124,21 +136,30 @@
   {
     "id": 13,
     "question": "What is another name for Santa Claus?",
-    "options": ["Saint Nicholas", "Father Winter", "Kris Kringle", "All of the above"],
+    "options": ["Saint Nicholas", 
+                "Father Winter", 
+                "Kris Kringle", 
+                "All of the above"],
     "correctAnswer": "All of the above",
     "difficulty": "easy"
   },
   {
     "id": 14,
     "question": "In which country is St. Nicholas Day celebrated on December 6th?",
-    "options": ["United States", "Germany", "France", "Italy"],
+    "options": ["United States", 
+                "Germany", 
+                "France",
+                "Italy"],
     "correctAnswer": "Germany",
     "difficulty": "medium"
   },
   {
     "id": 15,
     "question": "What did St. Nicholas traditionally put in children's shoes?",
-    "options": ["Coal", "Toys", "Fruit and nuts", "Money"],
+    "options": ["Coal", 
+                "Toys", 
+                "Fruit and nuts", 
+                "Money"],
     "correctAnswer": "Fruit and nuts",
     "difficulty": "medium"
   },
@@ -152,7 +173,10 @@
   {
     "id": 17,
     "question": "What do people traditionally put on top of a Christmas tree?",
-    "options": ["An angel", "A candle", "A star", "A snowflake"],
+    "options": ["An angel", 
+                "A candle", 
+                "A star", 
+                "A snowflake"],
     "correctAnswer": "A star",
     "difficulty": "easy"
   },
